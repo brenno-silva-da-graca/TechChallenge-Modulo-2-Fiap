@@ -14,7 +14,7 @@ namespace API.Controllers
             _DDDCadastro = DDDCadastro;
         }
 
-        [HttpGet("ListaR")]
+        [HttpGet("Listar")]
         public IActionResult GetContato()
         {
             return Ok(_DDDCadastro.ListarDDD());
