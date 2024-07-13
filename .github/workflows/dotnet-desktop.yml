@@ -38,5 +38,5 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Run unit tests
-        run: dotnet test ./TechChallenge-Modulo-2-Fiap/Tests --no-build --configuration Release --collect:"XPlat Code Coverage"
+        run: dotnet test ./Tests/Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
         
