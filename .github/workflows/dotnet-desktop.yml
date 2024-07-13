@@ -10,13 +10,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with: 
           dotnet-version: 8.0.x
           
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore ./TechChallenge_Contatos_DDD.sln
         
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build ./TechChallenge_Contatos_DDD.sln --no-restore
