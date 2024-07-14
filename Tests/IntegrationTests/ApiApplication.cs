@@ -20,7 +20,8 @@ namespace IntegrationTests
                     services.Remove(descriptor);
                 }
 
-                //SQLitePCL.Batteries_V2.Init();
+                SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlite3());
+                SQLitePCL.Batteries.Init();
 
                 var connection = new SqliteConnection("DataSource=:memory:");
                 connection.Open();
