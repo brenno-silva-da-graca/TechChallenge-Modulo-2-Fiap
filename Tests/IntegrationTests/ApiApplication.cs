@@ -26,7 +26,7 @@ namespace IntegrationTests
                 var connection = new SqliteConnection("DataSource=:memory:");
                 connection.Open();
 
-                services.AddScoped<IDbConnection>(sp => connection);
+                services.AddSingleton<IDbConnection>(sp => connection);
 
                 var sp = services.BuildServiceProvider();
 
@@ -39,13 +39,13 @@ namespace IntegrationTests
                     using (var command = db.CreateCommand())
                     {
                         command.CommandText = @"
-                            CREATE TABLE IF NOT EXISTS DDD (
+                            CREATE TABLE DDD (
                                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 NumDDD INTEGER,
                                 regiao TEXT
                             );
 
-                            CREATE TABLE IF NOT EXISTS Contatos (
+                            CREATE TABLE Contatos (
                                 ID INTEGER PRIMARY KEY AUTOINCREMENT,
                                 Nome TEXT,
                                 Telefone TEXT,

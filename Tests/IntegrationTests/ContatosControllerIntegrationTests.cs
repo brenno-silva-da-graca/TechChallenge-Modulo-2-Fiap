@@ -9,20 +9,18 @@ namespace IntegrationTests
     public class ContatosControllerIntegrationTests : IClassFixture<ApiApplication>
     {
         private readonly HttpClient _client;
-        private readonly IDbConnection _dbConnection;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ApiApplication _factory;
 
         public ContatosControllerIntegrationTests(ApiApplication factory)
         {
             _client = factory.CreateClient();
-            _serviceProvider = factory.Services;
-            _dbConnection = factory.Services.GetRequiredService<IDbConnection>();
+            _factory = factory;
         }
 
         [Fact]
         public async Task GetContato_ReturnsSuccess()
         {
-            using (var scope = _serviceProvider.CreateScope())
+            using (var scope = _factory.Services.CreateScope())
             {
                 var dbConnection = scope.ServiceProvider.GetRequiredService<IDbConnection>();
 
@@ -46,13 +44,13 @@ namespace IntegrationTests
                 INSERT INTO DDD (NumDDD, regiao) VALUES (11, 'São Paulo'); 
                 INSERT INTO Contatos (Nome, Telefone, Email, DDDID) VALUES ('Teste', '11123456789', 'teste@example.com', (SELECT Id FROM DDD WHERE NumDDD = 11));";
 
-            await _dbConnection.ExecuteAsync(commandText);
+            await dbConnection.ExecuteAsync(commandText);
         }
 
         private async Task CleanupDatabase(IDbConnection dbConnection)
         {
             var commandText = @"DELETE FROM Contatos; DELETE FROM DDD;";
-            await _dbConnection.ExecuteAsync(commandText);
+            await dbConnection.ExecuteAsync(commandText);
         }
 
         // Adicione mais testes conforme necessário
