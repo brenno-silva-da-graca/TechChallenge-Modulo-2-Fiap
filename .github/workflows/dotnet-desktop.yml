@@ -73,4 +73,4 @@ jobs:
       - name: Run integration tests
         env:
           ConnectionStrings__DefaultConnection: "Server=localhost;Database=YourDatabaseName;User Id=sa;Password=Fiap@2024;"
-        run: dotnet test ./IntegrationTests/IntegrationTests.csproj --no-build --configuration Release --filter Category=Integration
+        run: dotnet test ./Tests/IntegrationTests/IntegrationTests.csproj --no-build --configuration Release --filter Category=Integration
