@@ -38,7 +38,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Run unit tests
-        run: dotnet test ./Tests/Tests.csproj --configuration Debug --collect:"XPlat Code Coverage"
+        run: dotnet test ./Tests/UnitTests/Tests.csproj --configuration Debug --collect:"XPlat Code Coverage"
         
   integration_tests:
     runs-on: ubuntu-latest
