@@ -1,8 +1,10 @@
 
+using Prometheus;
+using System.Data;
+using API.Services;
+using System.Data.SqlClient;
 using Application.Interfaces;
 using Infrastructure.Repositories;
-using System.Data;
-using System.Data.SqlClient;
 using TechChallenge_Contatos.Repository;
 
 namespace API
@@ -18,7 +20,6 @@ namespace API
                 .Build();
 
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +32,8 @@ namespace API
 
             builder.Services.AddScoped<IDbConnection>((conexao) => new SqlConnection(stringConexao));
 
+            builder.Services.AddSingleton<MetricsService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -42,8 +45,13 @@ namespace API
 
             app.UseAuthorization();
 
+            // Adicione o middleware de métricas do Prometheus
+            app.UseHttpMetrics(); // Middleware para métricas HTTP
 
             app.MapControllers();
+
+            // Endpoint de métricas do Prometheus
+            app.MapMetrics();
 
             app.Run();
         }
