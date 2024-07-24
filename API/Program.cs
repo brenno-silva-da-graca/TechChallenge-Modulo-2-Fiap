@@ -53,6 +53,8 @@ namespace API
             // Endpoint de métricas do Prometheus
             app.MapMetrics();
 
+            app.UseMetricServer();
+
             app.Run();
         }
     }

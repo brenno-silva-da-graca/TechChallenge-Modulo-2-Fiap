@@ -10,6 +10,7 @@ services:
        - "8080"
     depends_on:
         - sqldata
+        - prometheus
 
   sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -20,3 +21,19 @@ services:
         - c:\dados\volumes\mssql:/var/opt/mssql/data
     ports:
         - "1450:1433"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+  
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
